@@ -1,0 +1,1 @@
+package com.assecor.jobs.assessment.service;
