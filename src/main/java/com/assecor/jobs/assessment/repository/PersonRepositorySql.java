@@ -1,33 +1,13 @@
 package com.assecor.jobs.assessment.repository;
 
-import java.util.List;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.repository.Repository;
+import org.springframework.stereotype.Component;
 
 import com.assecor.jobs.assessment.model.entity.PersonEntity;
 
-public class PersonRepositorySql implements PersonRepository {
+@Component
+@ConditionalOnProperty(prefix = "assessment", name="datasourceType", havingValue="db")
+public interface PersonRepositorySql extends Repository<PersonEntity, Long>, PersonRepository {
 
-    @Override
-    public List<PersonEntity> getAllPersons() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllPersons'");
-    }
-
-    @Override
-    public PersonEntity getPersonById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPersonById'");
-    }
-
-    @Override
-    public List<PersonEntity> getPersonsByColor(String color) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPersonsByColor'");
-    }
-
-    @Override
-    public Long createNewPerson(PersonEntity person) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createNewPerson'");
-    }
-    
 }

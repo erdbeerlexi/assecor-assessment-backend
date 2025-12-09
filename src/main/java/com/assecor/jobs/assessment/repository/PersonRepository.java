@@ -1,12 +1,13 @@
 package com.assecor.jobs.assessment.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.assecor.jobs.assessment.model.entity.PersonEntity;
 
 public interface PersonRepository {
-    List<PersonEntity> getAllPersons();
-    PersonEntity getPersonById(final int id);
-    List<PersonEntity> getPersonsByColor(final String color);
-    Long createNewPerson(final PersonEntity person);
+    List<PersonEntity> findAll();
+    Optional<PersonEntity> findById(final int id);
+    List<PersonEntity> findByFavoriteColor(final String color);
+    PersonEntity save(final PersonEntity person);
 }

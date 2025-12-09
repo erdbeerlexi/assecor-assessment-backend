@@ -18,16 +18,21 @@ public class AssessmentApplication {
 		SpringApplication.run(AssessmentApplication.class, args);
 	}
 
-	@Bean
-	public PersonRepository personRepository() {
-		PersonRepository personRepository;
-		System.out.println("We use now this datasourceType: " + datasourceType);
-		if (datasourceType.equalsIgnoreCase("csv")) {
-			personRepository = new PersonRepositoryCsv();
-		} else {
-			personRepository = new PersonRepositorySql();
-		}
+	//@Bean
+	//public PersonRepository personRepository() {
+//		PersonRepository personRepository;
+		//System.out.println("We use now this datasourceType: " + datasourceType);
+		//if (datasourceType.equalsIgnoreCase("csv")) {
+	//		personRepository = new PersonRepositoryCsv();
+//		} else {
+//			personRepository = new IPersonRepositorySql();
+//		}
 
-		return personRepository;
-	}
+//		return personRepository;
+//	}
+
+	//@Bean
+//	public PersonRepositoryCsv personRepositoryCsv() {
+//		return new PersonRepositoryCsv();
+//	}
 }

@@ -7,25 +7,31 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 import com.assecor.jobs.assessment.model.enums.Color;
 import com.assecor.jobs.assessment.model.entity.PersonEntity;
 
-
+@Component
+@ConditionalOnProperty(prefix = "assessment", name="datasourceType", havingValue="csv")
 public class PersonRepositoryCsv implements PersonRepository {
     @Value("${assessment.csvPath}")
     private String csvFilePath;
     private Logger log = LoggerFactory.getLogger(PersonRepositoryCsv.class);
     
-    public List<PersonEntity> getAllPersons() {
+    @Override
+    public List<PersonEntity> findAll() {
         return this.readCsv();
     }
 
-    public PersonEntity getPersonById(final int id) {
+    @Override
+    public Optional<PersonEntity> findById(final int id) {
         List<PersonEntity> persons = this.readCsv();
         PersonEntity foundPerson = null;
 
@@ -35,11 +41,12 @@ public class PersonRepositoryCsv implements PersonRepository {
                 break;
             }
         }
-
-        return foundPerson;
+        
+        return foundPerson != null ? Optional.of(foundPerson) : Optional.empty();
     }
 
-    public List<PersonEntity> getPersonsByColor(final String color) {
+    @Override
+    public List<PersonEntity> findByFavoriteColor(final String color) {
         List<PersonEntity> persons = this.readCsv();
         List<PersonEntity> foundPersons = new ArrayList<>();
 
@@ -52,7 +59,8 @@ public class PersonRepositoryCsv implements PersonRepository {
         return foundPersons;
     }
 
-    public Long createNewPerson(final PersonEntity person) {
+    @Override
+    public PersonEntity save(final PersonEntity person) {
         List<PersonEntity> persons = this.readCsv();
 
         persons.add(person);
@@ -62,7 +70,7 @@ public class PersonRepositoryCsv implements PersonRepository {
         this.writeCsv(persons);
 
 
-        return person.getId();
+        return person;
     }
 
     private List<PersonEntity> readCsv() {
