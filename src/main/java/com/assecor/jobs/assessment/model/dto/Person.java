@@ -3,7 +3,7 @@ package com.assecor.jobs.assessment.model.dto;
 import com.assecor.jobs.assessment.model.enums.Color;
 
 public class Person {
-    private int id;
+    private Long id;
     private String lastname;
     private String firstname;
     private String zipCode;
@@ -13,7 +13,7 @@ public class Person {
     public Person() {}
 
     public Person(
-        final int id,
+        final Long id,
         final String lastname,
         final String firstname,
         final String zipCode,
@@ -26,7 +26,7 @@ public class Person {
     }
 
     public Person(
-        final int id,
+        final Long id,
         final String lastname,
         final String firstname,
         final String zipCodeAndCity,
@@ -37,7 +37,7 @@ public class Person {
     }
 
     public Person(
-        final int id,
+        final Long id,
         final String lastname,
         final String firstname,
         final Color favoriteColor
@@ -66,11 +66,11 @@ public class Person {
     }
 
 
-    public void setId(final int id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 

@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: assessment
+assessment:
+  csvPath: persons_test.csv
+  datasourceType: CSV

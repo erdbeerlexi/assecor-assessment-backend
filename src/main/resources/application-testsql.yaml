@@ -3,3 +3,4 @@ spring:
     name: assessment
 assessment:
   csvPath: persons_test.csv
+  datasourceType: DB

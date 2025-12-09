@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assecor.jobs.assessment.model.dto.Person;
+import com.assecor.jobs.assessment.model.entity.PersonEntity;
 import com.assecor.jobs.assessment.repository.PersonRepository;
 import com.assecor.jobs.assessment.util.Mapper;
 
@@ -23,14 +24,17 @@ public class PersonService {
     }
 
     public Person getPersonById(final int id) {
-        return Mapper.mapPersonEntityToDto(this.personRepository.getPersonById(id));
+        PersonEntity foundPerson = this.personRepository.getPersonById(id);
+        Person mappedPerson = foundPerson != null ? Mapper.mapPersonEntityToDto(foundPerson) : null;
+
+        return mappedPerson;
     }
 
     public List<Person> getPersonsByColor(final String color) {
          return this.personRepository.getPersonsByColor(color).stream().map(personEntity -> Mapper.mapPersonEntityToDto(personEntity)).toList();
     }
 
-    public int createNewPerson(final Person person) {
+    public Long createNewPerson(final Person person) {
         return this.personRepository.createNewPerson(Mapper.mapPersonDtoToEntity(person));
     }
 }

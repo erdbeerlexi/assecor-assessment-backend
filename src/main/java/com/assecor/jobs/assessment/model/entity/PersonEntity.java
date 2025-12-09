@@ -1,20 +1,37 @@
 package com.assecor.jobs.assessment.model.entity;
 
-import com.assecor.jobs.assessment.model.dto.Person;
 import com.assecor.jobs.assessment.model.enums.Color;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "person")
 public class PersonEntity {
-       private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name = "lastname", length = 50, nullable = false, unique = false)
     private String lastname;
+    @Column(name = "firstname", length = 50, nullable = false, unique = false)
     private String firstname;
+    @Column(name = "zip_code", length = 5, nullable = false, unique = false)
     private String zipCode;
+    @Column(name = "city", length = 256, nullable = false, unique = false)
     private String city;
+    @Enumerated(EnumType.STRING)
     private Color favoriteColor;
 
     public PersonEntity() {}
 
     public PersonEntity(
-        final int id,
+        final Long id,
         final String lastname,
         final String firstname,
         final String zipCode,
@@ -27,7 +44,7 @@ public class PersonEntity {
     }
 
     public PersonEntity(
-        final int id,
+        final Long id,
         final String lastname,
         final String firstname,
         final String zipCodeAndCity,
@@ -38,7 +55,7 @@ public class PersonEntity {
     }
 
     public PersonEntity(
-        final int id,
+        final Long id,
         final String lastname,
         final String firstname,
         final Color favoriteColor
@@ -67,11 +84,11 @@ public class PersonEntity {
     }
 
 
-    public void setId(final int id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 

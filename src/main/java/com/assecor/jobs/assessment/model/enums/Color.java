@@ -6,7 +6,7 @@ public enum Color {
     VIOLETT(3, "violett"),
     RED(4, "rot"),
     YELLOW(5, "gelb"),
-    TURQUIS(6, "türkis"), //?
+    TURQUOISE(6, "türkis"), //?
     WHITE(7, "weiß");
 
     private int number;

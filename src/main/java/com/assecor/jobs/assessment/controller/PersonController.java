@@ -70,9 +70,9 @@ public class PersonController {
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<Integer> postPerson(@RequestBody final Person person) {
+    public ResponseEntity<Long> postPerson(@RequestBody final Person person) {
         System.out.println("new person: " + person.getFirstname() + " " + person.getLastname());
-        int newId = this.personService.createNewPerson(person);
+        Long newId = this.personService.createNewPerson(person);
         return ResponseEntity.ok(newId);
     }
 }

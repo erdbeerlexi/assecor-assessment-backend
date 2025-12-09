@@ -8,5 +8,5 @@ public interface PersonRepository {
     List<PersonEntity> getAllPersons();
     PersonEntity getPersonById(final int id);
     List<PersonEntity> getPersonsByColor(final String color);
-    int createNewPerson(final PersonEntity person);
+    Long createNewPerson(final PersonEntity person);
 }

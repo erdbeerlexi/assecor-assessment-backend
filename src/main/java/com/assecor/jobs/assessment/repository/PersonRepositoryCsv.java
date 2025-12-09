@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.assecor.jobs.assessment.model.enums.Color;
-import com.assecor.jobs.assessment.model.dto.Person;
 import com.assecor.jobs.assessment.model.entity.PersonEntity;
 
 
@@ -53,11 +52,11 @@ public class PersonRepositoryCsv implements PersonRepository {
         return foundPersons;
     }
 
-    public int createNewPerson(final PersonEntity person) {
+    public Long createNewPerson(final PersonEntity person) {
         List<PersonEntity> persons = this.readCsv();
 
         persons.add(person);
-        person.setId(persons.size());
+        person.setId((long)persons.size());
         persons.sort((person1, person2) -> { return person1.compareTo(person2);});
 
         this.writeCsv(persons);
@@ -75,7 +74,7 @@ public class PersonRepositoryCsv implements PersonRepository {
             String line = null;
             String tmp = "";
             String[] splittedLine = null;
-            int personCount = 1;
+            long personCount = 1;
 
             while ((line = br.readLine()) != null) {
                 tmp += line;
