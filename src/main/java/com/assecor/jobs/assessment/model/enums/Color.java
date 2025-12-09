@@ -1,4 +1,4 @@
-package com.assecor.jobs.assessment.model;
+package com.assecor.jobs.assessment.model.enums;
 
 public enum Color {
     BLUE(1, "blau"),

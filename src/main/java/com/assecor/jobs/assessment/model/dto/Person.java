@@ -1,4 +1,6 @@
-package com.assecor.jobs.assessment.model;
+package com.assecor.jobs.assessment.model.dto;
+
+import com.assecor.jobs.assessment.model.enums.Color;
 
 public class Person {
     private int id;

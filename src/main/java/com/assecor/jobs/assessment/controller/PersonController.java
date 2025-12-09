@@ -1,6 +1,5 @@
 package com.assecor.jobs.assessment.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.assecor.jobs.assessment.model.Person;
+import com.assecor.jobs.assessment.model.dto.Person;
 import com.assecor.jobs.assessment.service.PersonService;
 
 @RestController
@@ -75,6 +72,7 @@ public class PersonController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<Integer> postPerson(@RequestBody final Person person) {
         System.out.println("new person: " + person.getFirstname() + " " + person.getLastname());
-        return ResponseEntity.ok(11);
+        int newId = this.personService.createNewPerson(person);
+        return ResponseEntity.ok(newId);
     }
 }

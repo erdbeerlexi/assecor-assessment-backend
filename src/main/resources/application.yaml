@@ -3,3 +3,4 @@ spring:
     name: assessment
 assessment:
   csvPath: sample-input.csv
+  datasource: csv
