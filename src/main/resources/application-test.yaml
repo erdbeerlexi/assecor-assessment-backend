@@ -2,4 +2,4 @@ spring:
   application:
     name: assessment
 assessment:
-  csvPath: sample-input.csv
+  csvPath: persons_test.csv

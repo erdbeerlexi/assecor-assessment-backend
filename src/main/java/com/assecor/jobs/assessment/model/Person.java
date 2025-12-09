@@ -1,27 +1,75 @@
 package com.assecor.jobs.assessment.model;
 
 public class Person {
+    private int id;
     private String lastname;
     private String firstname;
     private String zipCode;
     private String city;
-    //enum draus machen
-    private int favouriteColour;
+    private Color favoriteColor;
 
     public Person() {}
 
     public Person(
+        final int id,
         final String lastname,
         final String firstname,
         final String zipCode,
         final String city,
-        final int favouriteColour
+        final Color favoriteColor
     ) {
-        this.lastname = lastname;
-        this.firstname = firstname;
+        this(id, lastname, firstname, favoriteColor);
         this.zipCode = zipCode;
         this.city = city;
-        this.favouriteColour = favouriteColour;
+    }
+
+    public Person(
+        final int id,
+        final String lastname,
+        final String firstname,
+        final String zipCodeAndCity,
+        final Color favoriteColor
+    ) {
+        this(id, lastname, firstname, favoriteColor);
+        this.setZipCodeAndCity(zipCodeAndCity);
+    }
+
+    public Person(
+        final int id,
+        final String lastname,
+        final String firstname,
+        final Color favoriteColor
+    ) {
+        this.id = id;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.favoriteColor = favoriteColor;
+    }
+
+    public void setZipCodeAndCity(final String zipCodeAndCity) {
+        if (zipCodeAndCity != null) {
+            String[] splitted = zipCodeAndCity.split(" ");
+            this.zipCode = splitted[0];
+            StringBuffer stringBuffer = new StringBuffer();
+            for (int i = 1; i < splitted.length; i++) { 
+                stringBuffer.append(splitted[i]);
+
+                if (i < splitted.length - 1) {
+                    stringBuffer.append(" ");
+                }
+            }
+
+            this.city = stringBuffer.toString();
+        }
+    }
+
+
+    public void setId(final int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public void setLastname(final String lastname) {
@@ -56,11 +104,11 @@ public class Person {
         return this.city;
     }
 
-    public void setFavouriteColour(final int favouriteColour) {
-        this.zipCode = zipCode;
+    public void setFavouriteColour(final Color favoriteColor) {
+        this.favoriteColor = favoriteColor;
     }
 
-    public int getFavouriteColour() {
-        return this.favouriteColour;
+    public Color getFavoriteColor() {
+        return this.favoriteColor;
     }
 }
