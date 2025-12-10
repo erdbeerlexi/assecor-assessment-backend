@@ -102,6 +102,9 @@ public class PersonControllerCsvTest {
         String postContent = """
                 {"city": "Testhausen", "favoriteColor": "blau", "firstname": "Test", "lastname": "Test", "zipCode": "10365"}
                 """;
+        String expectedJsonId = """
+                {"id": 11, "city": "Testhausen", "favoriteColor": "blau", "firstname": "Test", "lastname": "Test", "zipCode": "10365"}
+                """;
 
         mockMvc.perform(MockMvcRequestBuilders.post("/persons").contentType("application/json").content(postContent))
             .andExpect(status().isCreated());
@@ -116,5 +119,9 @@ public class PersonControllerCsvTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/persons/color/blau").accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().json(expectedJson));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/persons/11").accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().json(expectedJsonId));
     }
 }
