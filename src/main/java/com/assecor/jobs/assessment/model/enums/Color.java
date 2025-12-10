@@ -1,12 +1,17 @@
 package com.assecor.jobs.assessment.model.enums;
 
+/**
+ * Copyright 2025 (C) Alexandra Fengler
+ * 
+ * Author: Alexandra Fengler
+ */
 public enum Color {
     BLUE(1, "blau"),
     GREEN(2, "grün"),
     VIOLETT(3, "violett"),
     RED(4, "rot"),
     YELLOW(5, "gelb"),
-    TURQUOISE(6, "türkis"), //?
+    TURQUOISE(6, "türkis"),
     WHITE(7, "weiß");
 
     private int number;
@@ -22,6 +27,19 @@ public enum Color {
 
         for (Color color : Color.values()) {
             if (color.getNumber() == number) {
+                foundColor = color;
+                break;
+            }
+        }
+
+        return foundColor;
+    }
+
+    public static Color getByColorName(final String colorName) {
+        Color foundColor = null;
+
+        for (Color color : Color.values()) {
+            if (color.getColorName().equalsIgnoreCase(colorName)) {
                 foundColor = color;
                 break;
             }

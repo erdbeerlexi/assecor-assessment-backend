@@ -11,11 +11,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Copyright 2025 (C) Alexandra Fengler
+ * 
+ * Author: Alexandra Fengler
+ */
 @Entity
 @Table(name = "person")
 public class PersonEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(name = "lastname", length = 50, nullable = false, unique = false)
     private String lastname;
@@ -132,7 +137,7 @@ public class PersonEntity {
         return this.favoriteColor;
     }
 
-        public int compareTo(final PersonEntity otherPerson) {
+    public int compareTo(final PersonEntity otherPerson) {
         int value = 0;
 
         if (this.id < otherPerson.getId()) {
@@ -146,5 +151,71 @@ public class PersonEntity {
 
     public String toCsvLine() {
         return this.lastname + ", " + this.firstname + ", " + this.zipCode + " " + this.city + ", " + this.favoriteColor.getNumber();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.lastname == null) ? 0 : this.lastname.hashCode());
+        result = prime * result + ((this.firstname == null) ? 0 : this.firstname.hashCode());
+        result = prime * result + ((this.zipCode == null) ? 0 : this.zipCode.hashCode());
+        result = prime * result + ((this.city == null) ? 0 : this.city.hashCode());
+        result = prime * result + ((this.favoriteColor == null) ? 0 : this.favoriteColor.hashCode());
+        return result;
+    }
+
+    //The id us not used for equals as it does not belong to a person normally and
+    //we could not check properly if the person already  exists before creating a new one
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        PersonEntity other = (PersonEntity) obj;
+        if (this.lastname == null) {
+            if (other.lastname != null) {
+                return false;
+            }
+        } else if (!this.lastname.equals(other.lastname)) {
+            return false;
+        }
+
+        if (this.firstname == null) {
+            if (other.firstname != null) {
+                return false;
+            }
+        } else if (!this.firstname.equals(other.firstname)) {
+            return false;
+        }
+        
+        if (this.zipCode == null) {
+            if (other.zipCode != null) {
+                return false;
+            }
+        } else if (!this.zipCode.equals(other.zipCode)) {
+            return false;
+        }
+
+        if (this.city == null) {
+            if (other.city != null) {
+                return false;
+            }
+        } else if (!this.city.equals(other.city)) {
+            return false;
+        }
+
+        if (this.favoriteColor != other.favoriteColor) {
+            return false;
+        }
+
+        return true;
     }
 }

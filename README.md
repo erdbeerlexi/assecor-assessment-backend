@@ -1,167 +1,69 @@
-# Assecor Assessment Test (DE)
+# Assecor Assessment Test Implementation
+This is the implementation of the Assecor Assessment Test
 
-## Zielsetzung
+- [Assecor Assessment Test Implementation](#assecor-assessment-test-implementation)
+  - [Deutsch](#deutsch)
+    - [Erklärung](#erklärung)
+    - [Warnungen](#warnungen)
+    - [Mögliche Verbesserungen](#mögliche-verbesserungen)
+  - [English](#english)
+    - [Explanations](#explanations)
+    - [Warnings](#warnings)
+    - [Further improvement](#further-improvement)
 
-Das Ziel ist es ein REST – Interface zu implementieren, Bei den möglichen Frameworks stehen .NET(C#) oder Java zur Auswahl. Dabei sind die folgenden Anforderungen zu erfüllen:
+## Deutsch
+### Erklärung
+Als Framework wurde Spring Boot mit gradle gewählt. Als Datenbank wurde die in-memory Datenbank h2 gewählt, da es keine Anforderung gab die Daten dauerhaft zwischen Neustarts zu speichern.
 
-* Es soll möglich sein, Personen und ihre Lieblingsfarbe über das Interface zu verwalten
-* Die Daten sollen aus einer CSV Datei lesbar sein, ohne dass die CSV angepasst werden muss
-* Alle Personen mit exakten Lieblingsfarben können über das Interface identifiziert werden
+Die csv Datei wurde, aus Sicherheitsgründen, in `sample-input_original.csv` kopiert. Bei jedem Start der Anwendung wird diese Datei kopiert, wenn csv als Datenquelle benutzt wird. Der Kopiermechanismus kann mit `assessment.copyOriginalFile`ausgeschaltet werden. Die Datenbank wird ebenfalls beim Starten der Anwendung befüllt. Hibernate erstellt die Datenbankstrukturen.
 
-Einige Beispieldatensätze finden sich in `sample-input.csv`. Die Zahlen der ersten Spalte sollen den folgenden Farben entsprechen:
+Es wird ein enum für die Farben benutzt, da nicht beschrieben war, ob die Farben anpassbar / erweiterbar sein sollen. Deswegen muss das enum geändert werden, wenn die Farben geändert werden.
 
-| ID | Farbe |
-| --- | --- |
-| 1 | blau |
-| 2 | grün |
-| 3 | violett |
-| 4 | rot |
-| 5 | gelb |
-| 6 | türkis |
-| 7 | weiß |
+### Warnungen
+* Die Datenbank ist eine in-memory und damit benutzt Spring Boot automatisch `spring.jpa.hibernate.ddl-auto` mit `create-drop`. Sollte eine andere Datenbank benutzt werden, welche nicht eine in-memory ist, muss / sollte diese Eigenschaft angegeben / gefüllt werden, da Spring Boot hier sonst `none` als Standard setzt. Oder man erstellt das Datenbankschema anders, dann muss aber mit der ID Generation aufgepasst werden.
 
-Das Ausgabeformat der Daten ist als `application/json` festgelegt. Die Schnittstelle soll folgende Endpunkte anbieten:
+* Wenn die csv Datei beim Starten der Anwendung nicht überschrieben werden soll durch eine Kopie dann muss in der `application.yml` die Eigenschaft `assessment.copyOriginalFile` auf `false` gesetzt werden. Es wird kopiert, da in der Aufgabenstellung steht, dass die Originaldatei eingelesen werden soll und der POST Endpunkt überschreibt die benutzte csv Datei. Dabei wird die Datei auch formatiert. Die Originaldatei hat eingebaute Fehler.
 
-**GET** /persons
-```json
-[{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-},{
-"id" : 2,
-...
-}]
-```
+* Im Moment werden nur deutsche Farbnamen unterstützt. Es wurde nicht erwähnt, dass es mehrere Sprachen unterstützen soll und auch die englische Beschreibund benutzt deutsche Farbnamen.
 
-**GET** /persons/{id}
+* Wenn die `application-xxx.yml` für die Tests angepasst werden müssen: Diese befinden sich unter `main/resources`.
 
-*Hinweis*: als **ID** kann hier die Zeilennummer verwendet werden.
-```json
-{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-}
-```
+* Wenn eine weitere Datenquelle implementiert wird, sollte die `Startup` Klasse angepasst werden oder wenigstens geprüft werden.
 
-**GET** /persons/color/{color}
-```json
-[{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-},{
-"id" : 2,
-...
-}]
-```
+* In der Aufgabenstellung ist das JSON mit Postleitzahl und Stadt angegeben. Allerdings passen diese nicht so ganz in den Daten, da hier nicht weiter beschrieben wird, ob der Inhalt auf Sinnhaftigkeit geprüft werden soll, wird dieser nicht geprüft. Auch weiß ich nicht, ob es Stadtnamen mit Leerzeichen gibt oder nicht. Daher werden die so übernommen.
 
-## Akzeptanzkriterien
+### Mögliche Verbesserungen
+* Sollten die Farben anpassbar sein muss eine andere Art der Repräsentation / Speicherung gewählt werden. Am Besten eine eigene Tabelle. Aber das ist schwierig mit csv. Auch eine Internationalisierung der Farbnamen wäre sinnvoll.
 
-1. Die CSV Datei wurde eingelesen, und wird programmintern durch eine dem Schema entsprechende Modellklasse repräsentiert.
-2. Der Zugriff auf die Datensätze so abstrahiert, dass eine andere Datenquelle angebunden werden kann, ohne den Aufruf anpassen zu müssen.
-3. Die oben beschriebene REST-Schnittstelle wurde implementiert und liefert die korrekten Antworten.
-4. Der Zugriff auf die Datensätze, bzw. auf die zugreifende Klasse wird über Dependency Injection gehandhabt.
-5.  Die REST-Schnittstelle ist mit Unit-Tests getestet. 
-6.  Die `sample-input.csv` wurde nicht verändert 
+* Die Tests benutzen die normale Spring Boot Anwendung. Das heißt es werden keine Ressourcen aus `test/resources` benutzt sondern aus `main/resources`. Für dieses Projekt ist das kein Problem. Aber mit größeren Projekten mag dies nicht der beste Weg sein.
 
-## Bonuspunkte
-* Implementierung als MSBuild Projekt für kontinuierliche Integration auf TFS (C#/.NET) oder als Maven/Gradle Projekt (Java)
-* Implementieren Sie eine zusätzliche Methode POST/ Personen, die eine zusätzliche Aufzeichnung zur Datenquelle hinzufügen
-* Anbindung einer zweiten Datenquelle (z.B. Datenbank via Entity Framework)
+* Die Separierung von Postleitzahl und Stadt ist momentan zweimal vorhanden. In `Person`, dem DTO, und `PersonEntity`. Das zu vereinheitlichen wäre sinnvoll, allerdings gab es bisher keine zündende Idee, das sinnvoll zu tun.
 
-Denk an deine zukünftigen Kollegen, und mach es ihnen nicht zu einfach, indem du deine Lösung öffentlich zur Schau stellst. Danke!
+## English
+### Explanations
+As framework spring boot with gradle was chosen. The database was chosen as in-memory h2 as it does not need to persist the data between application starts, at least nothing like that was stated in the test description.
 
-# Assecor Assessment Test (EN)
+The csv file was copied to `sample-input_original.csv` for safety reason. It is copied on the application start if the csv repository is used and for the csv tests. The copy can be turned off with `assessment.copyOriginalFile`.
+The database is filled with the data on startup too. Hibernate creates the table(s).
 
-## goal
+An enum is used for the colors as it was not stated if or how it can be changed by the user afterwards. If the colors change the enum must be changed as well.
 
-You are to implement a RESTful web interface. The choice of framework and stack is yours between .NET (C#) or Java. It has to fulfull the following criteria:
+### Warnings
+* The database is an in-memory, therefore spring boot automatically uses `spring.jpa.hibernate.ddl-auto` with `create-drop`. If there is a need to use a different database which is not in-memory, then this must be specified as then spring boot will use `none`. Or the schema must be made differently, but then the ID generation must be considered as well.
 
-* You should be able to manage persons and their favourite colour using the interface
-* The application should be able to read the date from the CSV source, without modifying the source file
-* You can identify people with a common favourite colour using the interface
+* If the csv file should not be overwritten on startup then in the `applicaton.yml` the `assessment.copyOriginalFile` needs to be set to `false`. It is copied as the test stated clearly that the original csv file must be read in and the POST endpoint overwrites the csv file which reformats the the file a bit. The original file has intentional some errors in it.
 
-A set of sample data is contained within `sample-input.csv`. The number in the first column represents one of the following colours:
+* At the moment it is only possible to use german color names. It was not stated that different languages should be considered for it and in the english portion of the test description / goals the gernam names were used too.
 
-| ID | Farbe |
-|---|---|
-| 1 | blau |
-| 2 | grün |
-| 3 | violett |
-| 4 | rot |
-| 5 | gelb |
-| 6 | türkis |
-| 7 | weiß |
+* If the `application-xxx.yml` for the tests need to be changed: There are at the moment under `main/resources`
 
-the return content type is `application/json`. The interface should offer the following endpoints:
+* If another datasource type is added the `Startup` class needs to be changed too or at least should be looked at.
 
-**GET** /persons
-```json
-[{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-},{
-"id" : 2,
-...
-}]
-```
+* In the exercise was the JSON stated with zip code and city, but in the data the the cities where not always cities. It was not stated if the input should be checked for plausibility therefore the input is not checked and just used. I do not know if there are cities in the world who have space in the name or not.
 
-**GET** /persons/{id}
+### Further improvement
+* If the colors must be changeable another way of representig/storage is needed. They should have an own table. But that would be difficult now with the csv. An internationalizing of the color names would be useful too.
 
-*HINT*: use the csv line number as your **ID**.
-```json
-{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-}
-```
+* The tests use the normal spring boot application. Meaning they do not use `test/resources` as resource folder but `main/resources`. For this projects that is no problem. But with larger projects this may not the best way.
 
-**GET** /persons/color/{color}
-```json
-[{
-"id" : 1,
-"name" : "Hans",
-"lastname": "Müller",
-"zipcode" : "67742",
-"city" : "Lauterecken",
-"color" : "blau"
-},{
-"id" : 2,
-...
-}]
-```
-
-## acceptance criteria
-
-1. The csv file is read and represented internally by a suitable model class.
-2. File access is done with an interface, so the implementation can be easily replaced for other data sources.
-3. The REST interface is implemented according to the above specifications.
-4. Data access is done using a dependency injection mechanism
-5. Unit tests for the REST interface are available.
-6. `sample-input.csv` has not been changed.
-
-## bonus points are awarded for the following
-* implement the project with MSBuild in mind for CI using TFS/DevOps when using .NET, or as a Maven/Gradle project in Java
-* Implement an additional **POST** /persons to add new people to the dataset
-* Add a secondary data source (e.g. database via EF or JPA)
-
-Think about your potential future colleagues, and do not make it too easy for them by posting your solution publicly. Thank you!
+* The separation of zip code and city is at the moment twice in the project. In `Person`, the DTO, and `PersonEntitiy`. It would be wise to unify this, but there was no idea how to do this properly.

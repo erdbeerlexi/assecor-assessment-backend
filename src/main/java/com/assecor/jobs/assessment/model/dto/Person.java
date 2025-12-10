@@ -2,6 +2,11 @@ package com.assecor.jobs.assessment.model.dto;
 
 import com.assecor.jobs.assessment.model.enums.Color;
 
+/**
+ * Copyright 2025 (C) Alexandra Fengler
+ * 
+ * Author: Alexandra Fengler
+ */
 public class Person {
     private Long id;
     private String lastname;

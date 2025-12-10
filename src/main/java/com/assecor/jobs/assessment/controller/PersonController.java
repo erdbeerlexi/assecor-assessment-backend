@@ -1,5 +1,7 @@
 package com.assecor.jobs.assessment.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.assecor.jobs.assessment.model.dto.Person;
 import com.assecor.jobs.assessment.service.PersonService;
 
+
+/**
+ * Copyright 2025 (C) Alexandra Fengler
+ * 
+ * Author: Alexandra Fengler
+ */
 @RestController
 @RequestMapping("/persons")
 public class PersonController {
@@ -40,15 +48,12 @@ public class PersonController {
 
     @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<Person> getById(@PathVariable("id") final int id) {
-        System.out.println("id for searching: " + id);
         Person person = this.personService.getPersonById(id);
         ResponseEntity<Person> response;
 
         if (person != null) {
-            System.out.println("found person with id" + person.getId());
             response = ResponseEntity.ok(person);
         } else {
-            System.out.println("found no person");
             response = ResponseEntity.noContent().build();
         }
 
@@ -70,9 +75,21 @@ public class PersonController {
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<Long> postPerson(@RequestBody final Person person) {
-        System.out.println("new person: " + person.getFirstname() + " " + person.getLastname());
-        Long newId = this.personService.createNewPerson(person);
-        return ResponseEntity.ok(newId);
+    public ResponseEntity<?> postPerson(@RequestBody final Person person) {
+        ResponseEntity<?> response;
+
+        if (this.personService.doesPersonExists(person)) {
+            response = ResponseEntity.ok(null);
+        } else {
+            Long newId = this.personService.createNewPerson(person);
+            
+            try {
+                response = ResponseEntity.created(new URI("/persons/" + newId)).build();
+            } catch (URISyntaxException e) {
+                response = ResponseEntity.internalServerError().build();
+            }
+        }
+
+        return response;
     }
 }

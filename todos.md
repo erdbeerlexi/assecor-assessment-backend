@@ -1,5 +1,5 @@
-* Beim Endpunktaufruf wird CSV eingelesen (? einmalig beim Start? -> soll als Datenquelle ersetzbar sein, der Aufruf muss abstrahiert sein.)
-* Tests für den RestController schreiben
-* Den Code ordentlich formatieren!
-* die anderen GET und POST Methoden schreiben
-* Datenbankanbindung (?) ermöglichen
+* Beim Endpunktaufruf wird CSV eingelesen (? einmalig beim Start? -> soll als Datenquelle ersetzbar sein, der Aufruf muss abstrahiert sein.) (/)
+* Tests für den RestController schreiben (/)
+* Den Code ordentlich formatieren! (/)
+* die anderen GET und POST Methoden schreiben (/)
+* Datenbankanbindung (?) ermöglichen (/)

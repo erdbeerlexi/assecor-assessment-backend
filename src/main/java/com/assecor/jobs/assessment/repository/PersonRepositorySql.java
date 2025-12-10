@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 
 import com.assecor.jobs.assessment.model.entity.PersonEntity;
 
+/**
+ * Copyright 2025 (C) Alexandra Fengler
+ * 
+ * Author: Alexandra Fengler
+ */
 @Component
 @ConditionalOnProperty(prefix = "assessment", name="datasourceType", havingValue="db")
 public interface PersonRepositorySql extends Repository<PersonEntity, Long>, PersonRepository {

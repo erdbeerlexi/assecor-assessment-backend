@@ -3,4 +3,5 @@ spring:
     name: assessment
 assessment:
   csvPath: persons_test.csv
+  copyOriginalFile: true
   datasourceType: csv

@@ -1,6 +1,9 @@
 spring:
   application:
     name: assessment
+  datasource:
+    url: jdbc:h2:mem:assessment_test
 assessment:
   csvPath: persons_test.csv
+  copyOriginalFile: false
   datasourceType: db

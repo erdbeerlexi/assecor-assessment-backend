@@ -18,6 +18,11 @@ import org.springframework.stereotype.Component;
 import com.assecor.jobs.assessment.model.enums.Color;
 import com.assecor.jobs.assessment.model.entity.PersonEntity;
 
+/**
+ * Copyright 2025 (C) Alexandra Fengler
+ * 
+ * Author: Alexandra Fengler
+ */
 @Component
 @ConditionalOnProperty(prefix = "assessment", name="datasourceType", havingValue="csv")
 public class PersonRepositoryCsv implements PersonRepository {
@@ -41,17 +46,17 @@ public class PersonRepositoryCsv implements PersonRepository {
                 break;
             }
         }
-        
+
         return foundPerson != null ? Optional.of(foundPerson) : Optional.empty();
     }
 
     @Override
-    public List<PersonEntity> findByFavoriteColor(final String color) {
+    public List<PersonEntity> findByFavoriteColor(final Color color) {
         List<PersonEntity> persons = this.readCsv();
         List<PersonEntity> foundPersons = new ArrayList<>();
 
         for (PersonEntity person: persons) {
-            if (person.getFavoriteColor().getColorName().equals(color)) {
+            if (person.getFavoriteColor() == color) {
                 foundPersons.add(person);
             }
         }
@@ -68,7 +73,6 @@ public class PersonRepositoryCsv implements PersonRepository {
         persons.sort((person1, person2) -> { return person1.compareTo(person2);});
 
         this.writeCsv(persons);
-
 
         return person;
     }
@@ -90,7 +94,8 @@ public class PersonRepositoryCsv implements PersonRepository {
                 if (splittedLine.length < 4) {
                     continue;
                 } else {
-                    persons.add(new PersonEntity(personCount, splittedLine[0].trim(), splittedLine[1].trim(), splittedLine[2].trim(), Color.getByNumber(Integer.parseInt(splittedLine[3].strip()))));
+                    persons.add(new PersonEntity(personCount, splittedLine[0].trim(), splittedLine[1].trim(), splittedLine[2].trim(),
+                        Color.getByNumber(Integer.parseInt(splittedLine[3].strip()))));
                     personCount++;
                 }
 
@@ -106,7 +111,6 @@ public class PersonRepositoryCsv implements PersonRepository {
         } catch (Exception e) {
             log.error("An unexpected Exception occurred. Message: " + e.getMessage());
         }
-
 
         return persons;
     }
@@ -126,5 +130,4 @@ public class PersonRepositoryCsv implements PersonRepository {
             log.error("An IOException occurred while writing CSV file: " + this.csvFilePath + " Errormessage: " + e.getMessage());
         }
     }
-    
 }
