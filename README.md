@@ -15,7 +15,7 @@ This is the implementation of the Assecor Assessment Test
 ### Erklärung
 Als Framework wurde Spring Boot mit gradle gewählt. Als Datenbank wurde die in-memory Datenbank h2 gewählt, da es keine Anforderung gab die Daten dauerhaft zwischen Neustarts zu speichern.
 
-Die csv Datei wurde, aus Sicherheitsgründen, in `sample-input_original.csv` kopiert. Bei jedem Start der Anwendung wird diese Datei kopiert, wenn csv als Datenquelle benutzt wird. Der Kopiermechanismus kann mit `assessment.copyOriginalFile`ausgeschaltet werden. Die Datenbank wird ebenfalls beim Starten der Anwendung befüllt. Hibernate erstellt die Datenbankstrukturen.
+Die csv Datei wurde, aus Sicherheitsgründen, in `sample-input_original.csv` kopiert. Bei jedem Start der Anwendung wird diese Datei kopiert, wenn csv als Datenquelle benutzt wird. Der Kopiermechanismus kann mit `assessment.copyOriginalFile` ausgeschaltet werden. Die Datenbank wird ebenfalls beim Starten der Anwendung befüllt. Hibernate erstellt die Datenbankstrukturen.
 
 Es wird ein enum für die Farben benutzt, da nicht beschrieben war, ob die Farben anpassbar / erweiterbar sein sollen. Deswegen muss das enum geändert werden, wenn die Farben geändert werden.
 
