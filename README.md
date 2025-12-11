@@ -37,8 +37,6 @@ Es wird ein enum für die Farben benutzt, da nicht beschrieben war, ob die Farbe
 
 * Die Tests benutzen die normale Spring Boot Anwendung. Das heißt es werden keine Ressourcen aus `test/resources` benutzt sondern aus `main/resources`. Für dieses Projekt ist das kein Problem. Aber mit größeren Projekten mag dies nicht der beste Weg sein.
 
-* Die Separierung von Postleitzahl und Stadt ist momentan zweimal vorhanden. In `Person`, dem DTO, und `PersonEntity`. Das zu vereinheitlichen wäre sinnvoll, allerdings gab es bisher keine zündende Idee, das sinnvoll zu tun.
-
 ## English
 ### Explanations
 As framework spring boot with gradle was chosen. The database was chosen as in-memory h2 as it does not need to persist the data between application starts, at least nothing like that was stated in the test description.
@@ -65,5 +63,3 @@ An enum is used for the colors as it was not stated if or how it can be changed 
 * If the colors must be changeable another way of representig/storage is needed. They should have an own table. But that would be difficult now with the csv. An internationalizing of the color names would be useful too.
 
 * The tests use the normal spring boot application. Meaning they do not use `test/resources` as resource folder but `main/resources`. For this projects that is no problem. But with larger projects this may not the best way.
-
-* The separation of zip code and city is at the moment twice in the project. In `Person`, the DTO, and `PersonEntitiy`. It would be wise to unify this, but there was no idea how to do this properly.

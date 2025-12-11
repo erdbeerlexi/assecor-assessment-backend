@@ -8,7 +8,7 @@ package com.assecor.jobs.assessment.model.enums;
 public enum Color {
     BLUE(1, "blau"),
     GREEN(2, "grün"),
-    VIOLETT(3, "violett"),
+    VIOLET(3, "violett"),
     RED(4, "rot"),
     YELLOW(5, "gelb"),
     TURQUOISE(6, "türkis"),

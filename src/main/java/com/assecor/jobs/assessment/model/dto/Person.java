@@ -1,6 +1,7 @@
 package com.assecor.jobs.assessment.model.dto;
 
 import com.assecor.jobs.assessment.model.enums.Color;
+import com.assecor.jobs.assessment.util.PersonUtil;
 
 /**
  * Copyright 2025 (C) Alexandra Fengler
@@ -10,7 +11,7 @@ import com.assecor.jobs.assessment.model.enums.Color;
 public class Person {
     private Long id;
     private String lastname;
-    private String firstname;
+    private String name;
     private String zipCode;
     private String city;
     private Color favoriteColor;
@@ -20,56 +21,18 @@ public class Person {
     public Person(
         final Long id,
         final String lastname,
-        final String firstname,
+        final String name,
         final String zipCode,
         final String city,
         final Color favoriteColor
     ) {
-        this(id, lastname, firstname, favoriteColor);
+        this.id = id;
+        this.lastname = lastname;
+        this.name = name;
+        this.favoriteColor = favoriteColor;
         this.zipCode = zipCode;
         this.city = city;
     }
-
-    public Person(
-        final Long id,
-        final String lastname,
-        final String firstname,
-        final String zipCodeAndCity,
-        final Color favoriteColor
-    ) {
-        this(id, lastname, firstname, favoriteColor);
-        this.setZipCodeAndCity(zipCodeAndCity);
-    }
-
-    public Person(
-        final Long id,
-        final String lastname,
-        final String firstname,
-        final Color favoriteColor
-    ) {
-        this.id = id;
-        this.lastname = lastname;
-        this.firstname = firstname;
-        this.favoriteColor = favoriteColor;
-    }
-
-    public void setZipCodeAndCity(final String zipCodeAndCity) {
-        if (zipCodeAndCity != null) {
-            String[] splitted = zipCodeAndCity.split(" ");
-            this.zipCode = splitted[0];
-            StringBuffer stringBuffer = new StringBuffer();
-            for (int i = 1; i < splitted.length; i++) { 
-                stringBuffer.append(splitted[i]);
-
-                if (i < splitted.length - 1) {
-                    stringBuffer.append(" ");
-                }
-            }
-
-            this.city = stringBuffer.toString();
-        }
-    }
-
 
     public void setId(final Long id) {
         this.id = id;
@@ -87,12 +50,12 @@ public class Person {
         return this.lastname;
     }
 
-    public void setFirstname(final String firstname) {
-        this.firstname = firstname;
+    public void setName(final String name) {
+        this.name = name;
     }
 
-    public String getFirstname() {
-        return this.firstname;
+    public String getName() {
+        return this.name;
     }
 
     public void setZipCode(final String zipCode) {

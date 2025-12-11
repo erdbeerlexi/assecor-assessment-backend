@@ -1,1 +1,13 @@
-curl -H "Content-Type: application/json" -X POST -d '{"city": "Testhausen", "favoriteColor": "blau", "firstname": "Test", "lastname": "Test", "zipCode": "10365"}' http://localhost:8080/persons
+curl -H "Content-Type: application/json" -X POST -d '{"city": "Testhausen", "favoriteColor": "blau", "name": "Test", "lastname": "Test", "zipCode": "10365"}' http://localhost:8080/persons
+
+curl http://localhost:8080/persons
+
+curl http://localhost:8080/persons/11
+
+curl http://localhost:8080/persons/1
+
+curl http://localhost:8080/persons/112
+
+curl http://localhost:8080/persons/color/blau
+
+curl http://localhost:8080/persons/color/schwarz

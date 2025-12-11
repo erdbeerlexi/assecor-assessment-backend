@@ -33,9 +33,9 @@ public class PersonController {
     }
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Person>> getPersons() {
+    public ResponseEntity<List<Person>> getAllPersons() {
         List<Person> persons = this.personService.getAllPersons();
-        ResponseEntity<List<Person>> response;
+        ResponseEntity<List<Person>> response = null;
 
         if (persons.isEmpty()) {
             response = ResponseEntity.noContent().build();
@@ -49,7 +49,7 @@ public class PersonController {
     @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<Person> getById(@PathVariable("id") final int id) {
         Person person = this.personService.getPersonById(id);
-        ResponseEntity<Person> response;
+        ResponseEntity<Person> response = null;
 
         if (person != null) {
             response = ResponseEntity.ok(person);
@@ -63,7 +63,7 @@ public class PersonController {
     @GetMapping(path = "/color/{color}", produces = "application/json")
     public ResponseEntity<List<Person>> getById(@PathVariable("color") final String color) {
         List<Person> persons = this.personService.getPersonsByColor(color);
-        ResponseEntity<List<Person>> response;
+        ResponseEntity<List<Person>> response = null;
 
         if (persons.isEmpty()) {
             response = ResponseEntity.noContent().build();
@@ -76,7 +76,7 @@ public class PersonController {
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<?> postPerson(@RequestBody final Person person) {
-        ResponseEntity<?> response;
+        ResponseEntity<?> response = null;
 
         if (this.personService.doesPersonExists(person)) {
             response = ResponseEntity.ok(null);

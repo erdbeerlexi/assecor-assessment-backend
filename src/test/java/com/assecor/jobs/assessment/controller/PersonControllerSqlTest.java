@@ -25,16 +25,16 @@ public class PersonControllerSqlTest {
     @Test
     public void testGetAllPersons() throws Exception {
         String expectedJson = """
-                [{"id": 1, "city": "Lauterecken", "favoriteColor": "blau", "firstname": "Hans", "lastname": "Müller", "zipCode": "67742"},
-                {"id": 3, "city": "made up", "favoriteColor": "violett", "firstname": "Johnny", "lastname": "Johnson", "zipCode": "88888"},
-                {"id": 2, "city": "Stralsund", "favoriteColor": "grün", "firstname": "Peter", "lastname": "Petersen", "zipCode": "18439"},
-                {"id": 5, "city": "Hansstadt", "favoriteColor": "gelb", "firstname": "Jonas", "lastname": "Müller", "zipCode": "32323"},
-                {"id": 4, "city": "made up too", "favoriteColor": "rot", "firstname": "Milly", "lastname": "Millenium", "zipCode": "77777"},
-                {"id": 6, "city": "Japan", "favoriteColor": "türkis", "firstname": "Tastatur", "lastname": "Fujitsu", "zipCode": "42342"},
-                {"id": 7, "city": "Schweden - ☀", "firstname": "Anders", "lastname": "Andersson", "favoriteColor": "grün", "zipCode": "32132"},
-                {"id": 9, "city": "Woanders", "favoriteColor": "violett", "firstname": "Gerda", "lastname": "Gerber", "zipCode": "76535"},
-                {"id": 8, "city": "Wasweißich", "favoriteColor": "blau", "firstname": "Bertram", "lastname": "Bart", "zipCode": "12313"},
-                {"id": 10, "city": "Hierach", "favoriteColor": "grün", "firstname": "Klaus", "lastname": "Klaussen", "zipCode": "43246"}]
+                [{"id": 1, "city": "Lauterecken", "favoriteColor": "blau", "name": "Hans", "lastname": "Müller", "zipCode": "67742"},
+                {"id": 3, "city": "made up", "favoriteColor": "violett", "name": "Johnny", "lastname": "Johnson", "zipCode": "88888"},
+                {"id": 2, "city": "Stralsund", "favoriteColor": "grün", "name": "Peter", "lastname": "Petersen", "zipCode": "18439"},
+                {"id": 5, "city": "Hansstadt", "favoriteColor": "gelb", "name": "Jonas", "lastname": "Müller", "zipCode": "32323"},
+                {"id": 4, "city": "made up too", "favoriteColor": "rot", "name": "Milly", "lastname": "Millenium", "zipCode": "77777"},
+                {"id": 6, "city": "Japan", "favoriteColor": "türkis", "name": "Tastatur", "lastname": "Fujitsu", "zipCode": "42342"},
+                {"id": 7, "city": "Schweden - ☀", "name": "Anders", "lastname": "Andersson", "favoriteColor": "grün", "zipCode": "32132"},
+                {"id": 9, "city": "Woanders", "favoriteColor": "violett", "name": "Gerda", "lastname": "Gerber", "zipCode": "76535"},
+                {"id": 8, "city": "Wasweißich", "favoriteColor": "blau", "name": "Bertram", "lastname": "Bart", "zipCode": "12313"},
+                {"id": 10, "city": "Hierach", "favoriteColor": "grün", "name": "Klaus", "lastname": "Klaussen", "zipCode": "43246"}]
                 """;
 
         mockMvc.perform(MockMvcRequestBuilders.get("/persons")
@@ -47,7 +47,7 @@ public class PersonControllerSqlTest {
     @Test
     public void testGetById() throws Exception {
         String expectedJson = """
-                {"id": 1, "city": "Lauterecken", "favoriteColor": "blau", "firstname": "Hans", "lastname": "Müller", "zipCode": "67742"}
+                {"id": 1, "city": "Lauterecken", "favoriteColor": "blau", "name": "Hans", "lastname": "Müller", "zipCode": "67742"}
                 """;
 
         mockMvc.perform(MockMvcRequestBuilders.get("/persons/1").accept(MediaType.APPLICATION_JSON))
@@ -61,8 +61,8 @@ public class PersonControllerSqlTest {
     @Test
     public void testGetByColor() throws Exception {
         String expectedJson = """
-                [{"id": 1, "city": "Lauterecken", "favoriteColor": "blau", "firstname": "Hans", "lastname": "Müller", "zipCode": "67742"},
-                {"id": 8, "city": "Wasweißich", "favoriteColor": "blau", "firstname": "Bertram", "lastname": "Bart", "zipCode": "12313"}]
+                [{"id": 1, "city": "Lauterecken", "favoriteColor": "blau", "name": "Hans", "lastname": "Müller", "zipCode": "67742"},
+                {"id": 8, "city": "Wasweißich", "favoriteColor": "blau", "name": "Bertram", "lastname": "Bart", "zipCode": "12313"}]
                 """;
 
         mockMvc.perform(MockMvcRequestBuilders.get("/persons/color/blau").accept(MediaType.APPLICATION_JSON))
@@ -76,15 +76,15 @@ public class PersonControllerSqlTest {
     @Test
     public void testPostPerson() throws Exception {
         String expectedJson = """
-                [{"id": 1, "city": "Lauterecken", "favoriteColor": "blau", "firstname": "Hans", "lastname": "Müller", "zipCode": "67742"},
-                {"id": 8, "city": "Wasweißich", "favoriteColor": "blau", "firstname": "Bertram", "lastname": "Bart", "zipCode": "12313"},
-                {"id": 11, "city": "Testhausen", "favoriteColor": "blau", "firstname": "Test", "lastname": "Test", "zipCode": "10365"}]
+                [{"id": 1, "city": "Lauterecken", "favoriteColor": "blau", "name": "Hans", "lastname": "Müller", "zipCode": "67742"},
+                {"id": 8, "city": "Wasweißich", "favoriteColor": "blau", "name": "Bertram", "lastname": "Bart", "zipCode": "12313"},
+                {"id": 11, "city": "Testhausen", "favoriteColor": "blau", "name": "Test", "lastname": "Test", "zipCode": "10365"}]
                 """;
         String postContent = """
-                {"city": "Testhausen", "favoriteColor": "blau", "firstname": "Test", "lastname": "Test", "zipCode": "10365"}
+                {"city": "Testhausen", "favoriteColor": "blau", "name": "Test", "lastname": "Test", "zipCode": "10365"}
                 """;
         String expectedJsonId = """
-                {"id": 11, "city": "Testhausen", "favoriteColor": "blau", "firstname": "Test", "lastname": "Test", "zipCode": "10365"}
+                {"id": 11, "city": "Testhausen", "favoriteColor": "blau", "name": "Test", "lastname": "Test", "zipCode": "10365"}
                 """;
 
         mockMvc.perform(MockMvcRequestBuilders.post("/persons").contentType("application/json").content(postContent))

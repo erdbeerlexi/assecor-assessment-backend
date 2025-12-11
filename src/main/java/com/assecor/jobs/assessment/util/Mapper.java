@@ -15,7 +15,7 @@ public class Mapper {
     }
 
     public static PersonEntity mapPersonDtoToEntity(final Person person) {
-        return new PersonEntity(person.getId(), person.getLastname(), person.getFirstname(), person.getZipCode(),
+        return new PersonEntity(person.getId(), person.getLastname(), person.getName(), person.getZipCode(),
             person.getCity(), person.getFavoriteColor());
     }
 }

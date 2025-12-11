@@ -47,13 +47,13 @@ public class Startup {
             this.log.info("On Startup - will create now the initial data for the application");
             this.createPersonEntity("Müller", "Hans", "67742", "Lauterecken", Color.BLUE);
             this.createPersonEntity("Petersen", "Peter", "18439", "Stralsund", Color.GREEN);
-            this.createPersonEntity("Johnson", "Johnny", "88888", "made up", Color.VIOLETT);
+            this.createPersonEntity("Johnson", "Johnny", "88888", "made up", Color.VIOLET);
             this.createPersonEntity("Millenium", "Milly", "77777", "made up too", Color.RED);
             this.createPersonEntity("Müller", "Jonas", "32323", "Hansstadt", Color.YELLOW);
             this.createPersonEntity("Fujitsu", "Tastatur", "42342", "Japan", Color.TURQUOISE);
             this.createPersonEntity("Andersson", "Anders", "32132", "Schweden - ☀", Color.GREEN);
             this.createPersonEntity("Bart", "Bertram", "12313", "Wasweißich", Color.BLUE);
-            this.createPersonEntity("Gerber", "Gerda", "76535", "Woanders", Color.VIOLETT);
+            this.createPersonEntity("Gerber", "Gerda", "76535", "Woanders", Color.VIOLET);
             this.createPersonEntity("Klaussen", "Klaus", "43246", "Hierach", Color.GREEN);
         } else { //this needs to be an if-else if there will be a third datasourceType
             if (copyOriginalCsvFile) {
